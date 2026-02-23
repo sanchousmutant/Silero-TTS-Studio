@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Веб-интерфейс для синтеза речи Silero TTS с автоматической расстановкой ударений">
+    <meta name="keywords" content="TTS, синтез речи, Silero, русский язык">
+    <title>Silero TTS Studio - Синтез Речи</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="background-gradient"></div>
+
+    <div class="container">
+        <header class="header">
+            <h1>🎙️ Silero TTS Studio</h1>
+            <p class="subtitle">Профессиональный синтез русской речи</p>
+        </header>
+
+        <!-- Выбор голоса -->
+        <section class="section">
+            <h2 class="section-title">Голос диктора</h2>
+            <div id="speaker-options" class="speaker-grid">
+                <!-- Дикторы будут добавлены динамически через JS -->
+            </div>
+        </section>
+
+        <!-- Выбор скорости -->
+        <section class="section">
+            <h2 class="section-title">Скорость речи</h2>
+            <div class="speed-options" id="speed-options">
+                <label class="speed-option">
+                    <input type="radio" name="speed" value="x-slow">
+                    <span class="speed-label">
+                        <span class="speed-icon">🐌</span>
+                        <span class="speed-text">Очень медленно</span>
+                    </span>
+                </label>
+                <label class="speed-option">
+                    <input type="radio" name="speed" value="slow">
+                    <span class="speed-label">
+                        <span class="speed-icon">🚶</span>
+                        <span class="speed-text">Медленно</span>
+                    </span>
+                </label>
+                <label class="speed-option">
+                    <input type="radio" name="speed" value="medium" checked>
+                    <span class="speed-label">
+                        <span class="speed-icon">🚴</span>
+                        <span class="speed-text">Средне</span>
+                    </span>
+                </label>
+                <label class="speed-option">
+                    <input type="radio" name="speed" value="fast">
+                    <span class="speed-label">
+                        <span class="speed-icon">🏃</span>
+                        <span class="speed-text">Быстро</span>
+                    </span>
+                </label>
+                <label class="speed-option">
+                    <input type="radio" name="speed" value="x-fast">
+                    <span class="speed-label">
+                        <span class="speed-icon">🚀</span>
+                        <span class="speed-text">Очень быстро</span>
+                    </span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Текстовые области -->
+        <section class="section">
+            <div class="text-areas">
+                <div class="text-area-wrapper">
+                    <label for="text-input" class="input-label">
+                        <span>Введите текст</span>
+                        <span class="char-counter" id="input-counter">0</span>
+                    </label>
+                    <textarea id="text-input" rows="8"
+                        placeholder="Введите текст на русском языке...&#10;&#10;Например: В лесу родилась ёлочка, в лесу она росла."
+                        maxlength="5000"></textarea>
+                    <button id="add-stress-btn" class="btn btn-secondary">
+                        <span class="btn-icon">✨</span>
+                        <span>Поставить ударения</span>
+                    </button>
+                </div>
+
+                <div class="text-area-wrapper">
+                    <label for="stressed-text" class="input-label">
+                        <span>Текст с ударениями</span>
+                        <span class="char-counter" id="stressed-counter">0</span>
+                    </label>
+                    <textarea id="stressed-text" rows="8"
+                        placeholder="Здесь появится текст с ударениями...&#10;&#10;Вы можете редактировать его перед генерацией."
+                        maxlength="5000"></textarea>
+                    <div class="hint">💡 Можно редактировать ударения вручную</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Генерация -->
+        <section class="section generate-section">
+            <button id="generate-btn" class="btn btn-primary btn-large">
+                <span class="btn-icon">🎵</span>
+                <span>Сгенерировать аудио</span>
+            </button>
+            <div id="loader" class="loader" style="display: none;">
+                <div class="loader-spinner"></div>
+                <p class="loader-text">Генерируем аудио...</p>
+            </div>
+        </section>
+
+        <!-- История аудио -->
+        <section id="audio-history" class="section audio-section" style="display: none;">
+            <h2 class="section-title">🎵 История генераций</h2>
+            <div id="audio-list" class="audio-list">
+                <!-- Аудио элементы будут добавлены динамически -->
+            </div>
+        </section>
+
+        <!-- Toast контейнер -->
+        <div id="toast-container" class="toast-container"></div>
+    </div>
+
+    <footer class="footer">
+        <p>Powered by Silero TTS • Made with ❤️</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
